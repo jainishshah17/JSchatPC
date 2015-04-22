@@ -5,6 +5,11 @@
 FROM       ubuntu:latest
 MAINTAINER Docker
 
+# install NPM
+RUN apt-get update
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm
+
 # Installation:
 # Import MongoDB public GPG key AND create a MongoDB list file
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
@@ -14,11 +19,22 @@ RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
 RUN apt-get update
 RUN apt-get install -y -q mongodb-org
 
+
+
 # Create the MongoDB data directory
 RUN mkdir -p /data/db
+
+ADD index.html /
+ADD server.js /
+ADD css/main.css  css/main.css
+
+RUN npm install mongodb
+RUN npm install socket.io
 
 # Expose port #27017 from the container to the host
 EXPOSE 27017
 
 # Set usr/bin/mongod as the dockerized entry-point application
 ENTRYPOINT usr/bin/mongod
+
+CMD ["nodejs server.js"]
