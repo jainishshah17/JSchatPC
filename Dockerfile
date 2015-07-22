@@ -3,7 +3,7 @@
 # http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 
 FROM       ubuntu:latest
-MAINTAINER Docker
+MAINTAINER jainishshah@yahoo.com
 
 # install NPM
 RUN apt-get update
